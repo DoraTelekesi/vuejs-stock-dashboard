@@ -10,13 +10,21 @@
 
 <script>
 import BaseCard from './components/BaseCard.vue';
+import StockService from "@/services/stockService";
 
-
+const stockService = new StockService(); // ✅ create instance
 
 export default {
   name: 'App',
-  components: {
-    BaseCard
+  components: { BaseCard },
+
+  async created() {
+    try {
+      this.stockData = await stockService.fetchData('AAPL'); // ✅ call instance method
+      console.log("Loaded data", this.stockData);
+    } catch (err) {
+      console.error("Failed to fetch stock data", err);
+    }
   }
 }
 </script>
